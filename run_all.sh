@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Get CPU limit from argument (if any)
+CPU_LIMIT=$1
 STATE_FILE=".pipeline_state"
 LOG_FILE="pipeline_run_$(date +%Y%m%d_%H%M%S).log"
 
@@ -22,4 +24,18 @@ fi
 
 # Start logging
 echo "📜 Logging to $LOG_FILE"
-script -q -c "./actual_run.sh $CURRENT_STEP $STATE_FILE" "$LOG_FILE"
+
+# Run actual script, with or without cpulimit
+if [[ -z "$CPU_LIMIT" ]]; then
+    # No CPU limit requested
+    script -q -c "./actual_run.sh $CURRENT_STEP $STATE_FILE" "$LOG_FILE"
+else
+    if ! command -v cpulimit &> /dev/null; then
+        echo "❌ CPU limit requested ($CPU_LIMIT%), but 'cpulimit' is not installed."
+        echo "👉 Install it with: sudo apt install cpulimit"
+        exit 1
+    else
+        echo "🚦 Running with CPU usage limited to $CPU_LIMIT%"
+        cpulimit -l "$CPU_LIMIT" -- script -q -c "./actual_run.sh $CURRENT_STEP $STATE_FILE" "$LOG_FILE"
+    fi
+fi
