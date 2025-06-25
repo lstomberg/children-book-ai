@@ -11,8 +11,23 @@ run_step() {
 
     if [[ $CURRENT_STEP -lt $STEP_NUM ]]; then
         echo "🔄 Step $STEP_NUM: $STEP_NAME"
+
+        # Set up interrupt trap
+        trap 'echo "❌ Interrupted during $STEP_NAME. Not marking as complete."; exit 130' INT
+
+        # Run command and check status
         eval "$STEP_CMD"
-        echo $STEP_NUM > "$STATE_FILE"
+        EXIT_CODE=$?
+
+        # Reset trap
+        trap - INT
+
+        if [[ $EXIT_CODE -eq 0 ]]; then
+            echo $STEP_NUM > "$STATE_FILE"
+        else
+            echo "❌ Step $STEP_NUM failed (exit code $EXIT_CODE). Not marking as complete."
+            exit $EXIT_CODE
+        fi
     else
         echo "✅ Step $STEP_NUM already completed: $STEP_NAME"
     fi
