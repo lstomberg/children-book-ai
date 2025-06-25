@@ -27,7 +27,7 @@ training_args = TrainingArguments(
     save_strategy="epoch",
     logging_dir="./logs",
     logging_steps=500,
-    evaluation_strategy="no",
+    eval_strategy="no",
     report_to="none",
     save_total_limit=2
 )
