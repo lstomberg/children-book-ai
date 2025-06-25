@@ -1,0 +1,24 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+*.tmp
+*.log
+
+# Dataset and training outputs
+*.jsonl
+hf_cache/
+tokenized_dataset/
+children-book-model/
+logs/
+pipeline_run_*.log
+
+# Virtual environment
+venv/
+
+# System files
+.DS_Store
+.env
+*.swp
