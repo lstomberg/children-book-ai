@@ -14,6 +14,7 @@ tokenized_dataset/
 children-book-model/
 logs/
 pipeline_run_*.log
+.pipeline_state
 
 # Virtual environment
 venv/
