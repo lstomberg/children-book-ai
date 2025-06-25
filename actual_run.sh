@@ -5,7 +5,7 @@ echo "📦 Installing Python dependencies (CPU-only)..."
 pip install --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cpu -r requirements.txt
 
 echo "🔄 Step 1: Loading Dataset"
-python3 1_load_dataset.py
+EXPORT_JSON=false python3 1_load_dataset.py
 
 echo "🧼 Step 2: Tokenizing Dataset"
 python3 2_tokenize_dataset.py

@@ -1,8 +1,8 @@
 from datasets import load_dataset
 from transformers import AutoTokenizer
-from config import MODEL_NAME, MAX_LENGTH, TRAINED_DATASET_PATH
+from config import DATASET_NAME, CACHE_DIR, MODEL_NAME, MAX_LENGTH, TRAINED_DATASET_PATH
 
-dataset = load_dataset("json", data_files="raw_dataset.jsonl", split="train")
+dataset = load_dataset(DATASET_NAME, split="train", cache_dir=CACHE_DIR)
 
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 tokenizer.pad_token = tokenizer.eos_token
