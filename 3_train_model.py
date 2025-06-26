@@ -23,13 +23,17 @@ training_args = TrainingArguments(
     output_dir=OUTPUT_DIR,
     overwrite_output_dir=True,
     per_device_train_batch_size=BATCH_SIZE,
+    per_device_eval_batch_size=BATCH_SIZE,
+    gradient_accumulation_steps=4,
     num_train_epochs=NUM_EPOCHS,
-    save_strategy="epoch",
+    max_steps=200,
+    save_steps=200,
     logging_dir="./logs",
-    logging_steps=500,
+    logging_steps=10,
     eval_strategy="no",
+    logging_strategy="steps",
     report_to="none",
-    save_total_limit=2
+    save_total_limit=1
 )
 
 trainer = Trainer(
@@ -42,3 +46,7 @@ trainer = Trainer(
 
 trainer.train()
 print("✅ Training complete.")
+
+trainer.save_model(OUTPUT_DIR)
+tokenizer.save_pretrained(OUTPUT_DIR)
+print(f"✅ Model and tokenizer saved to {OUTPUT_DIR}.")

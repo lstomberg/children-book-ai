@@ -37,7 +37,6 @@ run_step 1 "Installing Dependencies" 'pip install --no-cache-dir --extra-index-u
 run_step 2 "Loading Dataset" 'EXPORT_JSON=false python3 1_load_dataset.py'
 run_step 3 "Tokenizing Dataset" 'python3 2_tokenize_dataset.py'
 run_step 4 "Training Model" 'python3 3_train_model.py'
-run_step 5 "Saving Model" 'python3 4_save_model.py'
 run_step 6 "Evaluating Model" 'python3 5_evaluate.py'
 run_step 7 "Generating Sample Stories" 'python3 6_generate.py'
 
