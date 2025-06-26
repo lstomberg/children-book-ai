@@ -28,8 +28,7 @@ generation_kwargs = {
     "num_return_sequences": 1
 }
 
-print("📘 Generated Children's Stories:
-")
+print("📘 Generated Children's Stories:")
 
 for prompt in prompts:
     inputs = tokenizer(prompt, return_tensors="pt").to(device)
